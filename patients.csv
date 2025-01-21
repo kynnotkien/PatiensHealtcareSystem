@@ -1,0 +1,3 @@
+name,email,password,role,uid,conditions,prescriptions
+admin,admin,admin,admin,f090d94c,none,none
+patient,patient,patient1,patient,a8c822ea,example conditions,example prescriptions
