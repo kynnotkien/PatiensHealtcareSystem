@@ -238,20 +238,38 @@ class HealthCareApp:
         register_window.mainloop()
 
     def show_patient_screen(self):
-        """Show the patient dashboard."""
+        """Show the patient dashboard with an improved interface."""
         if self.current_user:
             screen = tk.Tk()
             screen.title("Patient Dashboard")
+            screen.geometry("800x600")
+            screen.configure(bg="#f0f0f0")
 
-            tk.Label(screen, text="Patient Dashboard", font=('Arial', 20)).pack(pady=10)
-            tk.Label(screen, text="Conditions:", font=('Arial', 15)).pack(pady=10)
-            tk.Label(screen, text="\n".join(self.current_user.get_conditions()), font=('Arial', 12)).pack(pady=10)
+            header_frame = tk.Frame(screen, bg="#4CAF50")
+            header_frame.pack(fill="x")
 
-            tk.Label(screen, text="Prescriptions:", font=('Arial', 15)).pack(pady=10)
-            tk.Label(screen, text="\n".join(self.current_user.get_prescriptions()), font=('Arial', 12)).pack(pady=10)
+            tk.Label(header_frame, text="Patient Dashboard", font=('Arial', 24), bg="#4CAF50", fg="white").pack(pady=20)
 
-            tk.Button(screen, text="Update Conditions", command=self.update_patient_conditions, font=('Arial', 15)).pack(pady=10)
-            tk.Button(screen, text="Update Prescriptions", command=self.update_patient_prescriptions, font=('Arial', 15)).pack(pady=10)
+            content_frame = tk.Frame(screen, bg="#f0f0f0")
+            content_frame.pack(pady=20)
+
+            tk.Label(content_frame, text="Conditions:", font=('Arial', 18), bg="#f0f0f0").grid(row=0, column=0, sticky="w", pady=10)
+            conditions_text = tk.Text(content_frame, height=5, width=50, font=('Arial', 14))
+            conditions_text.insert(tk.END, "\n".join(self.current_user.get_conditions()))
+            conditions_text.config(state=tk.DISABLED)
+            conditions_text.grid(row=1, column=0, pady=10)
+
+            tk.Label(content_frame, text="Prescriptions:", font=('Arial', 18), bg="#f0f0f0").grid(row=2, column=0, sticky="w", pady=10)
+            prescriptions_text = tk.Text(content_frame, height=5, width=50, font=('Arial', 14))
+            prescriptions_text.insert(tk.END, "\n".join(self.current_user.get_prescriptions()))
+            prescriptions_text.config(state=tk.DISABLED)
+            prescriptions_text.grid(row=3, column=0, pady=10)
+
+            button_frame = tk.Frame(screen, bg="#f0f0f0")
+            button_frame.pack(pady=20)
+
+            tk.Button(button_frame, text="Update Conditions", command=self.update_patient_conditions, font=('Arial', 15), bg="#4CAF50", fg="white").grid(row=0, column=0, padx=10, pady=10)
+            tk.Button(button_frame, text="Update Prescriptions", command=self.update_patient_prescriptions, font=('Arial', 15), bg="#4CAF50", fg="white").grid(row=0, column=1, padx=10, pady=10)
 
             screen.mainloop()
 
@@ -334,9 +352,12 @@ class HealthCareApp:
                 self.reset_patient_password(patient)
 
         # Buttons to edit
-        tk.Button(admin_screen, text="Edit Conditions", command=lambda: edit_conditions(patient.get_email()), font=('Arial', 15)).pack(pady=10)
-        tk.Button(admin_screen, text="Edit Prescriptions", command=lambda: edit_prescriptions(patient.get_email()), font=('Arial', 15)).pack(pady=10)
-        tk.Button(admin_screen, text="Reset Password", command=lambda: reset_password(patient.get_email()), font=('Arial', 15)).pack(pady=10)
+        button_frame = tk.Frame(admin_screen)
+        button_frame.pack(pady=10)
+
+        tk.Button(button_frame, text="Edit Conditions", command=lambda: edit_conditions(patient.get_email()), font=('Arial', 10)).grid(row=0, column=0, padx=5)
+        tk.Button(button_frame, text="Edit Prescriptions", command=lambda: edit_prescriptions(patient.get_email()), font=('Arial', 10)).grid(row=0, column=1, padx=5)
+        tk.Button(button_frame, text="Reset Password", command=lambda: reset_password(patient.get_email()), font=('Arial', 10)).grid(row=0, column=2, padx=5)
 
         admin_screen.mainloop()
 
