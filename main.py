@@ -1,3 +1,12 @@
+# -------------------------------------------------------
+# Patient Health Care System
+# Developed by: Kien Luu (https://github.com/kynnotkien)
+# Date: 01/19/2025
+# Description: A system that allows patients to manage their medical conditions and prescriptions,
+#              and provides admin access to manage patient data and oversee healthcare records.
+# GitHub: https://github.com/kynnotkien/PatiensHealtcareSystem
+# -------------------------------------------------------
+
 import tkinter as tk
 from tkinter import messagebox, ttk
 import csv
